@@ -1,27 +1,37 @@
 
 const express_1 = require("express");
 var router = express_1.Router();
-const { pool} = require('../pg')
+const { pool } = require('../pg')
 
- 
-router.get('/', async function(req, res){
-    const result = await pool.query('select * from motivos')
-    res.send(result.rows)
+
+router.get('/', async function (req, res) {
+  const result = await pool.query('select * from motivos')
+  res.send(result.rows)
 });
 
 
-router.post('/', async function(req, res){
-    const text = 'INSERT INTO motivos(id, nombre, descipcion, estado) VALUES($1, $2, $3, $4) RETURNING *'
-    const values = [req.body.id, req.body.nombre ,req.body.descripcion, req.body.estado]
+router.post('/', async function (req, res) {
+  const text = 'INSERT INTO motivos(id, nombre, descipcion, estado) VALUES($1, $2, $3, $4) RETURNING *'
+  const values = [await getMax() + 1, req.body.nombre, req.body.descripcion, req.body.estado]
 
-    try {
-        const res = await pool.query(text, values)
-        console.log(res.rows[0])
-      } catch (err) {
-        console.log(err.stack)
-      }
+  try {
+    const res = await pool.query(text, values)
+    console.log(res.rows[0])
+  } catch (err) {
+    console.log(err.stack)
+  }
 });
 
+
+async function getMax(params) {
+  try {
+    const result = await pool.query("select coalesce (Max(id),1) from motivos")
+    return result.rows[0].coalesce;
+  } catch (error) {
+    return 1;
+  }
+
+}
 
 
 module.exports = router;
