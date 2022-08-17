@@ -23,6 +23,15 @@ router.post('/', async function (req, res) {
   }
 });
 
+router.post('/anular', async function (req, res) {
+  try {
+    const res = await pool.query('update departamento set estado = I where id = '+req.body.id)
+    console.log(res.rows[0])
+  } catch (err) {
+    console.log(err.stack)
+  }
+});
+
 
 async function getMax(params) {
   try {
