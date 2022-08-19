@@ -6,6 +6,8 @@ const empresas = require('./routes/empresas')
 const motivos = require('./routes/motivos')
 const persona = require('./routes/personas')
 const tipopersona = require('./routes/tipoPersona')
+const menu = require('./routes/menu')
+const productos = require('./routes/productos')
 const body_parser = require('body-parser');
 const cors = require('cors');
 
@@ -20,6 +22,8 @@ app.use('/empresas', empresas);
 app.use('/motivos', motivos);
 app.use('/personas', persona);
 app.use('/tipoPersona', tipopersona);
+app.use('/menu', menu);
+app.use('/productos', productos);
 
 
 
