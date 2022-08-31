@@ -8,7 +8,7 @@ const { pool } = require('../pg')
 router.get('/', async function (req, res) {
   const result = await pool.query('select * from productos')
   res.send(result.rows)
-});
+}); 
 
 
 
@@ -18,8 +18,8 @@ router.post('/', async function (req, res) {
   const values = [await getMax() + 1, req.body.codigo, req.body.nombre,req.body.descripcion,req.body.stock,req.body.costo, req.body.precio, req.body.unidad,req.body.estado,req.body.fecha,req.body.usuario]
 
   try {
-    const res = await pool.query(text, values)
-    console.log(res.rows[0])
+    const resexecute = await pool.query(text, values)
+    res.send(resexecute.rows[0])
   } catch (err) {
     console.log(err.stack)
   }

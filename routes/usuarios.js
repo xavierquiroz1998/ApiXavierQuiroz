@@ -12,8 +12,13 @@ router.get('/', async function(req, res){
 router.get('/login/:usuario', async function(req, res){
     var u= req.params.usuario;
     var query = "select * from usuarios where usuario = '"+u+"'";
-    const result = await pool.query(query)
-    res.send( result.rows[0])
+    try {
+        const result = await pool.query(query)
+        res.send( result.rows[0])
+    } catch (error) {
+        res.send([]);
+    }
+
 });
 
 
