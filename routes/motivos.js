@@ -12,13 +12,13 @@ router.get('/', async function (req, res) {
 
 router.post('/', async function (req, res) {
   const text = 'INSERT INTO motivos(id, nombre, descipcion, estado) VALUES($1, $2, $3, $4) RETURNING *'
-  const values = [await getMax() + 1, req.body.nombre, req.body.descripcion, req.body.estado]
+  const values = [await getMax() + 1, req.body.nombre, req.body.descipcion, req.body.estado]
 
   try {
-    const res = await pool.query(text, values)
-    console.log(res.rows[0])
+    const resultado = await pool.query(text, values)
+    res.send(resultado.rows[0])
   } catch (err) {
-    console.log(err.stack)
+    res.send({})
   }
 });
 

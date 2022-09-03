@@ -15,10 +15,10 @@ router.post('/', async function (req, res) {
   const values = [await getMax() + 1, req.body.nombre, req.body.descripcion, req.body.estado]
 
   try {
-    const res = await pool.query(text, values)
-    console.log(res.rows[0])
+    const resultado = await pool.query(text, values)
+    res.send(resresultado.rows[0])
   } catch (err) {
-    console.log(err.stack)
+    res.send({})
   }
 });
 

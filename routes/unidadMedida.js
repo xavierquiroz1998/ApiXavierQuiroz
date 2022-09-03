@@ -28,7 +28,7 @@ router.post('/', async function (req, res) {
       const result = await pool.query("select coalesce (Max(id),1) from unidadmedida")
       return result.rows[0].coalesce;
     } catch (error) {
-      return 1;
+      return 1; 
     }
   
   }
