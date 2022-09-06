@@ -9,6 +9,8 @@ const tipopersona = require('./routes/tipoPersona')
 const menu = require('./routes/menu')
 const productos = require('./routes/productos')
 const unidadMedida = require('./routes/unidadMedida')
+const pedido = require('./routes/pedidos')
+const factura = require('./routes/facturas')
 const body_parser = require('body-parser');
 const cors = require('cors');
 
@@ -26,6 +28,8 @@ app.use('/tipoPersona', tipopersona);
 app.use('/menu', menu);
 app.use('/productos', productos);
 app.use('/unidad', unidadMedida);
+app.use('/pedidos', pedido);
+app.use('/facturas', factura);
 
 
 
