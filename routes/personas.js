@@ -20,8 +20,8 @@ router.post('/', async function (req, res) {
     req.body.empresaproveedor, req.body.idempresa, req.body.iddepartamento, req.body.tipo, req.body.estado]
 
     try {
-        const res = await pool.query(text, values)
-        console.log(res.rows[0])
+        const result = await pool.query(text, values)
+        res.send(result.rows[0])
     } catch (err) {
         console.log(err.stack)
     }
