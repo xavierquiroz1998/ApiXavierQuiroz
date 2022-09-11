@@ -12,7 +12,7 @@ router.get('/', async function (req, res) {
 
 router.post('/', async function (req, res) {
   const text = 'INSERT INTO factura_cab(id, id_cliente, observacion, fecha, estado, id_usuario, id_pedido) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-  const values = [await getMax() + 1, req.body.id_cliente, req.body.observacion, , req.body.fecha, req.body.estado, req.body.id_usuario, req.body.id_pedido]
+  const values = [await getMax() + 1, req.body.id_cliente, req.body.observacion, req.body.fecha, req.body.estado, req.body.id_usuario, req.body.id_pedido]
 
   try {
     const resultado = await pool.query(text, values)
@@ -21,6 +21,41 @@ router.post('/', async function (req, res) {
     res.send({})
   }
 });
+
+router.get('/detalles/:id', async function (req, res) {
+  var u = req.params.id;
+  var query = "select * from factura_det where id_cab = '" + u + "'";
+  try {
+    const result = await pool.query(query)
+    res.send(result.rows)
+  } catch (error) {
+    console.log(err);
+    res.send([]);
+  }
+});
+
+router.post('/facturaDet', async function (req, res) {
+  const text = 'INSERT INTO factura_det(id, id_cab, id_producto, cantidad, id_motivo, precio, cod_iva, iva, sub_total, total) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *'
+  const values = [await getMaxdet() + 1, req.body.id_cab, req.body.id_producto, req.body.cantidad, req.body.id_motivo, req.body.precio, req.body.cod_iva, req.body.iva, req.body.sub_total, req.body.total]
+
+  try {
+    const resultado = await pool.query(text, values)
+    res.send(resultado.rows[0])
+  } catch (err) {
+    console.log(err);
+    res.send({})
+  }
+});
+
+async function getMaxdet(params) {
+  try {
+    const result = await pool.query("select coalesce (Max(id),1) from factura_det")
+    return result.rows[0].coalesce;
+  } catch (error) {
+    return 1;
+  }
+}
+
 
 
 async function getMax(params) {
