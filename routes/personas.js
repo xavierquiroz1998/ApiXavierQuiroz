@@ -14,9 +14,10 @@ router.get('/', async function (req, res) {
 
 
 router.post('/', async function (req, res) {
-    const text = 'INSERT INTO persona(id, identificacion, nombres, direccion, correo, celular, telefono, empresaproveedor, idempresa, iddepartamento, tipo)'
-        + ' VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11) RETURNING *'
-    const values = [await getMax() + 1, req.body.identificacion, req.body.nombres, req.body.direccion, req.body.correo, req.body.celular, req.body.telefono, req.body.empresaproveedor, req.body.idempresa, req.body.iddepartamento, req.body.tipo]
+    const text = 'INSERT INTO persona(id, identificacion, nombres, direccion, correo, celular, telefono, empresaproveedor, idempresa, iddepartamento, tipo,estado)'
+        + ' VALUES($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11,$12) RETURNING *'
+    const values = [await getMax() + 1, req.body.identificacion, req.body.nombres, req.body.direccion, req.body.correo, req.body.celular, req.body.telefono, 
+        req.body.empresaproveedor, req.body.idempresa, req.body.iddepartamento, req.body.tipo, req.body.estado]
 
     try {
         const res = await pool.query(text, values)
@@ -26,14 +27,7 @@ router.post('/', async function (req, res) {
     }
 });
 
-router.get('/getId', async function (req, res) {
-    try {
-        const result = await getMax();
-        res.send(result + "");
-    } catch (error) {
 
-    }
-});
 
 
 async function getMax(params) {
