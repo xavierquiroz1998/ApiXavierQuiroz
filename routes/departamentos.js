@@ -24,11 +24,14 @@ router.post('/', async function (req, res) {
 });
 
 router.post('/anular', async function (req, res) {
+  const text = "UPDATE departamento set estado = 'I' where id= $1 RETURNING *"
+  const values = [req.body.id]
   try {
-    const res = await pool.query('update departamento set estado = I where id = '+req.body.id)
-    console.log(res.rows[0])
+    const resultado = await pool.query(text, values)
+    res.send(resultado.rows[0])
   } catch (err) {
-    console.log(err.stack)
+    console.log(err);
+    res.send({})
   }
 });
 

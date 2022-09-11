@@ -22,6 +22,18 @@ router.post('/', async function (req, res) {
   }
 });
 
+router.post('/anular', async function (req, res) {
+  const text = "UPDATE motivos set estado = 'I' where id= $1 RETURNING *"
+  const values = [req.body.id]
+  try {
+    const resultado = await pool.query(text, values)
+    res.send(resultado.rows[0])
+  } catch (err) {
+    console.log(err);
+    res.send({})
+  }
+});
+
 
 async function getMax(params) {
   try {

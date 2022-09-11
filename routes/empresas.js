@@ -30,7 +30,20 @@ async function getMax(params) {
   } catch (error) {
     return 1;
   }
-
 }
+
+
+router.post('/anular', async function (req, res) {
+  const text = "UPDATE empresas set estado = 'I' where id= $1 RETURNING *"
+  const values = [req.body.id]
+  try {
+    const resultado = await pool.query(text, values)
+    res.send(resultado.rows[0])
+  } catch (err) {
+    console.log(err);
+    res.send({})
+  }
+});
+
 
 module.exports = router;
