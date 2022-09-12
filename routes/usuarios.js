@@ -32,7 +32,18 @@ router.get('/login/:usuario', async function(req, res){
     } catch (error) {
         res.send([]);
     }
+});
 
+router.post('/anular', async function (req, res) {
+    const text = "UPDATE usuarios set estado = 'I' where id= $1 RETURNING *"
+    const values = [req.body.id]
+    try {
+        const resultado = await pool.query(text, values)
+        res.send(resultado.rows[0])
+    } catch (err) {
+        console.log(err);
+        res.send({})
+    }
 });
 
 async function getMax(params) {
