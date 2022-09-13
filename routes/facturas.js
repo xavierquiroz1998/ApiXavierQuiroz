@@ -24,7 +24,7 @@ router.post('/', async function (req, res) {
 
 router.get('/detalles/:id', async function (req, res) {
   var u = req.params.id;
-  var query = "select * from factura_det where id_cab = '" + u + "'";
+  var query = "select * from factura_det where id_cab = " + u ;
   try {
     const result = await pool.query(query)
     res.send(result.rows)
