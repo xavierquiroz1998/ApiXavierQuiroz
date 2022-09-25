@@ -18,7 +18,7 @@ router.get('/usuario', async function (req, res) {
 router.post('/', async function (req, res) {
 
     const text = 'INSERT INTO menu_x_usuario(id_menu, id_usuario, "create", update, search, delete, id) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-    const values = [req.body.id_menu, req.body.id_usuario, req.body.create, req.body.update, req.body.search, req.body.delete, await getMax() + 1]
+    const values = [req.body.id_menu, req.body.id_usuario, req.body.create, req.body.update, false, req.body.delete, await getMax() + 1]
     try {
         const result = await pool.query(text, values);
         res.send(result.rows[0])

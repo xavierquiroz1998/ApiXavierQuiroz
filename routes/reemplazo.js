@@ -19,6 +19,7 @@ router.post('/', async function (req, res) {
     const resultado = await pool.query(text, values)
     res.send(resultado.rows[0])
   } catch (err) {
+    console.log(err);
     res.send({})
   }
 });
@@ -35,9 +36,9 @@ router.get('/detalles/:id', async function (req, res) {
   }
 });
 
-router.post('/facturaDet', async function (req, res) {
+router.post('/remplazoDet', async function (req, res) {
   const text = 'INSERT INTO reemplazo_det(id, id_cab, id_producto1, cantidad, motivo, id_producto2, cantidad2) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *'
-  const values = [await getMaxdet() + 1, req.body.id_cab, req.body.id_producto1, req.body.cantidad, req.body.id_motivo, req.body.id_producto2, req.body.cantidad2]
+  const values = [await getMaxdet() + 1, req.body.id_cab, req.body.id_producto1, req.body.cantidad, req.body.motivo, req.body.id_producto2, req.body.cantidad2]
 
   try {
     const resultado = await pool.query(text, values)
