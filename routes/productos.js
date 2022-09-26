@@ -6,7 +6,12 @@ const { pool } = require('../pg')
 
 
 router.get('/', async function (req, res) {
-  const result = await pool.query('select * from productos')
+  const result = await pool.query('select * from producto_stock')
+  res.send(result.rows)
+});
+
+router.get('/activos', async function (req, res) {
+  const result = await pool.query("select * from producto_stock where estado='A' and stock > 0 ")
   res.send(result.rows)
 });
 

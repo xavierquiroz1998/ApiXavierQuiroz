@@ -9,6 +9,11 @@
         const result = await pool.query('select * from tipoPersona')
         res.send(result.rows)
     });
+ 
+    router.get('/report', async function(req, res){
+        const result = await pool.query('select * from report_anulados')
+        res.send(result.rows)
+    });
 
 
     router.post('/', async function(req, res){

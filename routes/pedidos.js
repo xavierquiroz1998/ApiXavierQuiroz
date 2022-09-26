@@ -8,6 +8,11 @@ router.get('/', async function (req, res) {
     const result = await pool.query('select * from pedido_cab')
     res.send(result.rows)
   });
+
+  router.get('/pendientes', async function (req, res) {
+    const result = await pool.query('select * from pedidos_pendiente')
+    res.send(result.rows)
+  });
   
 
   router.post('/', async function (req, res) {
