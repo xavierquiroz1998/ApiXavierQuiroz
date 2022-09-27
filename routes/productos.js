@@ -10,6 +10,11 @@ router.get('/', async function (req, res) {
   res.send(result.rows)
 });
 
+router.get('/costovsprecio', async function (req, res) {
+  const result = await pool.query('select * from costo_vs_precio')
+  res.send(result.rows)
+});
+
 router.get('/activos', async function (req, res) {
   const result = await pool.query("select * from producto_stock where estado='A' and stock > 0 ")
   res.send(result.rows)
